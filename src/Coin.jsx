@@ -6,15 +6,19 @@ import choice from './helpers';
 
 function Coin() {
     const [coinState, setCoinState] = useState(null);
+
     const [totals, setTotals] = useState({
         heads: 0,
         tails: 0,
-        flips: 0
+        flips: 0,
     });
+
+    const [visibility, setVisibility] = useState({ display: "none" });
 
     function handleFlip(evt) {
         const outcome = choice(images);
         setCoinState(outcome.src);
+
         if (outcome.text === "heads") {
             setTotals({
                 heads: totals.heads + 1,
@@ -28,13 +32,18 @@ function Coin() {
                 flips: totals.flips + 1
             });
         }
+
+        setVisibility({ display: "block" });
     }
 
     const { heads, tails, flips } = totals;
 
     return (
         <div className="Coin">
-            <img className="Coin-image" src={coinState} alt="coin-image" />
+            <img className="Coin-image"
+            src={coinState}
+            alt="coin-image"
+            style={visibility}/>
             <button
                 className='Coin-flip btn btn-secondary'
                 onClick={handleFlip}>
